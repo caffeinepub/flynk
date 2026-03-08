@@ -129,7 +129,7 @@ function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
               <div className="flex items-start justify-between mb-6">
                 <div>
                   <h2 className="font-serif text-2xl text-foreground">
-                    Start Your 3-Day Free Trial
+                    Start Your 7-Day Free Trial
                   </h2>
                   <p className="text-sm text-muted-foreground mt-1">
                     No credit card. No commitment. Just a clean home.
@@ -162,7 +162,7 @@ function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                     🎉
                   </div>
                   <h3 className="font-serif text-xl text-foreground mb-2">
-                    Your 3-day trial is booked!
+                    Your 7-day trial is booked!
                   </h3>
                   <p className="text-muted-foreground text-sm mb-6">
                     We'll WhatsApp you within 2 hours to confirm your start
@@ -234,7 +234,7 @@ function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                       >
                         <SelectValue placeholder="Select your home type" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent onClick={(e) => e.stopPropagation()}>
                         <SelectItem value="PG">PG / Hostel</SelectItem>
                         <SelectItem value="OneBHK">1 BHK</SelectItem>
                         <SelectItem value="TwoBHK">2 BHK</SelectItem>
@@ -260,7 +260,7 @@ function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                     </Button>
                   </div>
                   <p className="text-xs text-center text-muted-foreground">
-                    ✓ 3 days free · ✓ No card needed · ✓ Cancel anytime
+                    ✓ 7 days free · ✓ No card needed · ✓ Cancel anytime
                   </p>
                 </form>
               )}
@@ -312,22 +312,13 @@ function Navbar({ onWaitlist, onNavigate }: NavbarProps) {
           <a
             href="#hero"
             className="flex items-center gap-1"
-            aria-label="flynk. home"
+            aria-label="flynk home"
           >
-            <span className="font-serif text-2xl font-bold text-foreground tracking-tight">
-              flynk
-            </span>
             <span
-              className="font-serif text-2xl font-bold"
-              style={{
-                background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                filter: "drop-shadow(0 0 8px rgba(124,58,237,0.3))",
-              }}
+              className="font-serif text-2xl font-bold tracking-tight"
+              style={{ color: "#3D0066" }}
             >
-              .
+              FLYNK
             </span>
           </a>
 
@@ -536,7 +527,7 @@ function HeroSection({ onWaitlist }: { onWaitlist: () => void }) {
                   }}
                   aria-hidden="true"
                 />
-                Now Live in Bengaluru 560045
+                Now Live in Bengaluru 560077
               </span>
             </motion.div>
 
@@ -592,7 +583,7 @@ function HeroSection({ onWaitlist }: { onWaitlist: () => void }) {
                       letterSpacing: "-0.03em",
                     }}
                   >
-                    ₹3,999
+                    ₹4,999
                   </span>
                   <span className="font-sans text-muted-foreground text-base">
                     /month
@@ -626,9 +617,9 @@ function HeroSection({ onWaitlist }: { onWaitlist: () => void }) {
                 style={{
                   background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
                 }}
-                aria-label="Start your 3-day free trial — no card needed"
+                aria-label="Start your 7-day free trial — no card needed"
               >
-                Start 3-Day Free Trial →
+                Start 7-Day Free Trial →
               </button>
               <a
                 href={WA_LINK}
@@ -647,7 +638,7 @@ function HeroSection({ onWaitlist }: { onWaitlist: () => void }) {
             {/* Trust chips */}
             <div className="flex flex-wrap gap-2">
               {[
-                "✓ 3-Day Free Trial",
+                "✓ 7-Day Free Trial",
                 "✓ Flynk Academy Certified",
                 "✓ Background Verified",
                 "✓ Shadow Flynk if Absent",
@@ -675,6 +666,38 @@ function HeroSection({ onWaitlist }: { onWaitlist: () => void }) {
             transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="grid grid-cols-2 lg:grid-cols-1 gap-3 lg:gap-4"
           >
+            {/* Hero photo placeholder */}
+            <div
+              className="col-span-2 rounded-2xl overflow-hidden flex items-center justify-center"
+              style={{
+                background:
+                  "linear-gradient(135deg, rgba(124,58,237,0.08), rgba(245,158,11,0.08))",
+                border: "2px dashed rgba(124,58,237,0.25)",
+                minHeight: "200px",
+                padding: "24px",
+              }}
+            >
+              <div className="text-center">
+                <div
+                  className="w-16 h-16 rounded-full flex items-center justify-center text-2xl mx-auto mb-3"
+                  style={{ background: "rgba(124,58,237,0.1)" }}
+                >
+                  👩‍💼
+                </div>
+                <p
+                  className="font-sans text-xs text-center leading-relaxed"
+                  style={{
+                    color: "#7A75A0",
+                    fontStyle: "italic",
+                    maxWidth: "260px",
+                  }}
+                >
+                  [INSERT: Photo of Flynk professional at apartment door —
+                  smiling, in uniform, holding ID card]
+                </p>
+              </div>
+            </div>
+
             {/* Card 1: Pricing highlight */}
             <div
               className="col-span-2 flex items-center gap-4 p-5 rounded-2xl"
@@ -706,17 +729,17 @@ function HeroSection({ onWaitlist }: { onWaitlist: () => void }) {
                       backgroundClip: "text",
                     }}
                   >
-                    ₹3,999
+                    ₹4,999
                   </span>
                   <span className="font-sans text-muted-foreground text-sm">
                     /mo
                   </span>
                 </div>
                 <p className="font-sans text-xs font-semibold text-foreground mt-0.5">
-                  Starter plan
+                  Standard plan
                 </p>
                 <p className="font-sans text-xs text-muted-foreground mt-0.5">
-                  3-day free trial included
+                  7-day free trial included
                 </p>
               </div>
             </div>
@@ -845,7 +868,7 @@ function HeroSection({ onWaitlist }: { onWaitlist: () => void }) {
 
 function Ticker() {
   const tickerText =
-    "✦ Same Flynk Every Day | Flynk Academy Certified | ✦ Shadow Flynk if Absent | No Hourly Billing | ✦ Background Verified Flynks | Live in Bengaluru 560045 | ✦ ₹4,999 Launch Price | 100% Trust Guaranteed | ";
+    "✦ Same Flynk Every Day | Flynk Academy Certified | ✦ Shadow Flynk if Absent | No Hourly Billing | ✦ Background Verified Flynks | Live in Bengaluru 560077 | ✦ ₹4,999 Launch Price | 100% Trust Guaranteed | ";
   const doubled = tickerText + tickerText;
 
   return (
@@ -985,8 +1008,8 @@ function HowItWorksSection() {
     {
       num: "03",
       emoji: "🤝",
-      title: "Meet & subscribe",
-      desc: "Your Flynk visits for a first-look meeting. You approve. Subscription begins.",
+      title: "Meet & love",
+      desc: "Your Flynk arrives for your first morning. You meet her. Subscription begins.",
     },
     {
       num: "04",
@@ -1020,7 +1043,7 @@ function HowItWorksSection() {
               letterSpacing: "-0.02em",
             }}
           >
-            How flynk<span className="gradient-text">.</span> works
+            How <span style={{ color: "#3D0066" }}>FLYNK</span> works
           </h2>
         </motion.div>
 
@@ -1114,8 +1137,15 @@ function ServicesSection() {
       emoji: "➕",
       title: "Upcoming Add-Ons",
       desc: "Cooking prep, laundry, deep clean — coming soon as we expand.",
-      dashed: true,
       color: "#7A75A0",
+      comingSoon: true,
+    },
+    {
+      emoji: "🍳",
+      title: "Cooking Assistance",
+      desc: "Basic South and North Indian cooking — launching soon.",
+      color: "#F59E0B",
+      comingSoon: true,
     },
   ];
 
@@ -1167,20 +1197,11 @@ function ServicesSection() {
               }}
               data-ocid={`services.card.${i + 1}`}
             >
-              <div
-                className={`service-card rounded-2xl p-7 h-full flex flex-col gap-4 transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1 ${
-                  service.dashed
-                    ? "border-2 border-dashed bg-white"
-                    : "bg-white border border-border shadow-card"
-                }`}
-                style={service.dashed ? { borderColor: "#C4BAE8" } : {}}
-              >
+              <div className="service-card rounded-2xl p-7 h-full flex flex-col gap-4 transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1 bg-white border border-border shadow-card">
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl"
                   style={{
-                    background: service.dashed
-                      ? "rgba(123,127,150,0.08)"
-                      : `${service.color}12`,
+                    background: `${service.color}12`,
                   }}
                 >
                   {service.emoji}
@@ -1188,7 +1209,7 @@ function ServicesSection() {
                 <div>
                   <h3
                     className="font-serif text-lg mb-1.5"
-                    style={{ color: service.dashed ? "#7A75A0" : "#0C0A14" }}
+                    style={{ color: "#0C0A14" }}
                   >
                     {service.title}
                   </h3>
@@ -1196,6 +1217,18 @@ function ServicesSection() {
                     {service.desc}
                   </p>
                 </div>
+                {service.comingSoon && (
+                  <span
+                    className="font-sans text-xs font-bold px-2.5 py-1 rounded-full w-fit"
+                    style={{
+                      background: "rgba(245,158,11,0.1)",
+                      color: "#F59E0B",
+                      border: "1px solid rgba(245,158,11,0.25)",
+                    }}
+                  >
+                    Coming Soon
+                  </span>
+                )}
               </div>
             </motion.div>
           ))}
@@ -1240,6 +1273,10 @@ function CheckIcon({ id }: { id: string }) {
 }
 
 function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
+  const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">(
+    "monthly",
+  );
+
   const starterFeatures = [
     "Daily home sweeping (all floors)",
     "Daily mopping (all floors)",
@@ -1292,6 +1329,62 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Billing toggle */}
+        <div className="flex justify-center mb-8">
+          <div
+            className="inline-flex items-center p-1 rounded-full"
+            style={{
+              background: "rgba(255,255,255,0.06)",
+              border: "1px solid rgba(255,255,255,0.1)",
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => setBillingCycle("monthly")}
+              data-ocid="pricing.monthly_toggle"
+              className="px-5 py-2 rounded-full text-sm font-semibold font-sans transition-all duration-200"
+              style={
+                billingCycle === "monthly"
+                  ? {
+                      background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
+                      color: "white",
+                    }
+                  : { color: "rgba(255,255,255,0.5)" }
+              }
+            >
+              Monthly
+            </button>
+            <button
+              type="button"
+              onClick={() => setBillingCycle("annual")}
+              data-ocid="pricing.annual_toggle"
+              className="px-5 py-2 rounded-full text-sm font-semibold font-sans transition-all duration-200 flex items-center gap-2"
+              style={
+                billingCycle === "annual"
+                  ? {
+                      background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
+                      color: "white",
+                    }
+                  : { color: "rgba(255,255,255,0.5)" }
+              }
+            >
+              Annual
+              <span
+                className="text-xs font-bold px-1.5 py-0.5 rounded-full"
+                style={{
+                  background:
+                    billingCycle === "annual"
+                      ? "rgba(255,255,255,0.2)"
+                      : "rgba(245,158,11,0.2)",
+                  color: billingCycle === "annual" ? "white" : "#F59E0B",
+                }}
+              >
+                Save 22%
+              </span>
+            </button>
+          </div>
+        </div>
+
         {/* Free trial banner strip */}
         <div className="flex justify-center mb-10">
           <div
@@ -1312,7 +1405,7 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
             >
               ✦
             </span>
-            3-Day Free Trial on All Plans — No Credit Card Required
+            7-Day Free Trial on All Plans — No Credit Card Required
             <span
               style={{
                 background: "linear-gradient(135deg,#7C3AED,#F59E0B)",
@@ -1338,7 +1431,7 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
             className="font-sans text-xs font-bold uppercase tracking-widest mb-4"
             style={{ color: "#F59E0B" }}
           >
-            Early Bird — 560045 Only
+            Early Bird — 560077 Only
           </p>
           <h2
             className="font-serif text-white"
@@ -1375,6 +1468,9 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
               <p className="font-sans text-white/50 text-xs font-semibold uppercase tracking-widest mb-4">
                 Starter
               </p>
+              <p className="font-sans text-white/40 text-xs mb-3">
+                6 days/week
+              </p>
               <div className="flex items-end gap-2 mb-1">
                 <span
                   className="font-serif text-white"
@@ -1384,12 +1480,20 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
                     letterSpacing: "-0.03em",
                   }}
                 >
-                  ₹3,999
+                  {billingCycle === "monthly" ? "₹3,999" : "₹3,119"}
                 </span>
                 <span className="font-sans text-white/40 text-sm mb-1">
                   /mo
                 </span>
               </div>
+              {billingCycle === "annual" && (
+                <p
+                  className="font-sans text-white/50 text-xs mb-2"
+                  style={{ color: "#F59E0B" }}
+                >
+                  Billed annually — save 22%
+                </p>
+              )}
               <p className="font-sans text-white/35 text-xs mb-7">
                 3-month minimum
               </p>
@@ -1419,7 +1523,7 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
                 Start Free Trial →
               </button>
               <p className="font-sans text-xs text-center text-white/40 mt-2">
-                3 days free · No card needed
+                7 days free · No card needed
               </p>
             </div>
           </motion.div>
@@ -1466,6 +1570,9 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
                   Most Popular
                 </span>
               </div>
+              <p className="font-sans text-white/40 text-xs mb-3">
+                6 days/week
+              </p>
 
               <div className="flex items-end gap-2 mb-1">
                 <span
@@ -1480,27 +1587,40 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
                     backgroundClip: "text",
                   }}
                 >
-                  ₹4,999
+                  {billingCycle === "monthly" ? "₹4,999" : "₹3,899"}
                 </span>
                 <span className="font-sans text-white/40 text-sm mb-1">
                   /mo
                 </span>
               </div>
-              <div className="flex items-center gap-2 mb-7">
-                <del className="font-sans text-white/30 text-xs">
-                  ₹6,999/mo after launch
-                </del>
-                <span
-                  className="font-sans text-xs font-bold px-2 py-0.5 rounded-full"
-                  style={{
-                    background: "rgba(245,158,11,0.12)",
-                    color: "#F59E0B",
-                    border: "1px solid rgba(245,158,11,0.25)",
-                  }}
+              {billingCycle === "annual" && (
+                <p
+                  className="font-sans text-xs mb-2"
+                  style={{ color: "#F59E0B" }}
                 >
-                  Save ₹2,000/mo
-                </span>
-              </div>
+                  Billed annually — save 22%
+                </p>
+              )}
+              {billingCycle === "monthly" && (
+                <div className="flex items-center gap-2 mb-1">
+                  <del className="font-sans text-white/30 text-xs">
+                    ₹6,999/mo after launch
+                  </del>
+                  <span
+                    className="font-sans text-xs font-bold px-2 py-0.5 rounded-full"
+                    style={{
+                      background: "rgba(245,158,11,0.12)",
+                      color: "#F59E0B",
+                      border: "1px solid rgba(245,158,11,0.25)",
+                    }}
+                  >
+                    Save ₹2,000/mo
+                  </span>
+                </div>
+              )}
+              <p className="font-sans text-white/35 text-xs mb-7">
+                3-month minimum
+              </p>
 
               <div className="space-y-3 mb-8">
                 {standardFeatures.map((f, i) => (
@@ -1526,7 +1646,7 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
                 Start Free Trial →
               </button>
               <p className="font-sans text-xs text-center text-white/35 mt-3">
-                ✓ 3 days free · No card needed · Early bird rate locked for life
+                ✓ 7 days free · No card needed · Early bird rate locked for life
               </p>
             </div>
           </motion.div>
@@ -1550,6 +1670,9 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
               <p className="font-sans text-white/50 text-xs font-semibold uppercase tracking-widest mb-4">
                 Plus
               </p>
+              <p className="font-sans text-white/40 text-xs mb-3">
+                6 days/week
+              </p>
               <div className="flex items-end gap-2 mb-1">
                 <span
                   className="font-serif text-white"
@@ -1559,12 +1682,20 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
                     letterSpacing: "-0.03em",
                   }}
                 >
-                  ₹6,999
+                  {billingCycle === "monthly" ? "₹6,999" : "₹5,459"}
                 </span>
                 <span className="font-sans text-white/40 text-sm mb-1">
                   /mo
                 </span>
               </div>
+              {billingCycle === "annual" && (
+                <p
+                  className="font-sans text-white/50 text-xs mb-2"
+                  style={{ color: "#F59E0B" }}
+                >
+                  Billed annually — save 22%
+                </p>
+              )}
               <p className="font-sans text-white/35 text-xs mb-7">
                 3-month minimum
               </p>
@@ -1594,7 +1725,7 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
                 Start Free Trial →
               </button>
               <p className="font-sans text-xs text-center text-white/40 mt-2">
-                3 days free · No card needed
+                7 days free · No card needed
               </p>
             </div>
           </motion.div>
@@ -1629,7 +1760,7 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
 
 // ─── Why flynk. ───────────────────────────────────────────────────────────────
 
-function WhyFlynkSection() {
+function WhyFlynkSection({ onWaitlist }: { onWaitlist: () => void }) {
   const reasons = [
     {
       num: "01",
@@ -1687,7 +1818,7 @@ function WhyFlynkSection() {
               letterSpacing: "-0.02em",
             }}
           >
-            Why choose flynk<span className="gradient-text">.</span>?
+            Why choose <span style={{ color: "#3D0066" }}>FLYNK</span>?
           </h2>
         </motion.div>
 
@@ -1727,6 +1858,26 @@ function WhyFlynkSection() {
             </motion.div>
           ))}
         </div>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="text-center mt-12"
+        >
+          <button
+            type="button"
+            onClick={onWaitlist}
+            data-ocid="why_flynk.primary_button"
+            className="inline-flex items-center justify-center px-8 py-4 rounded-full text-base font-semibold text-white btn-glow transition-all duration-200 hover:opacity-90"
+            style={{
+              background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
+            }}
+            aria-label="Start your 7-day free trial"
+          >
+            Start Your Free 7-Day Trial →
+          </button>
+        </motion.div>
       </div>
     </section>
   );
@@ -1831,7 +1982,7 @@ function AcademySectionPreview({
     {
       num: "01",
       title: "Training Programme",
-      desc: "2 weeks of hands-on cleaning technique training. Tested and certified.",
+      desc: "5-day intensive training programme. Tested and certified.",
     },
     {
       num: "02",
@@ -1879,7 +2030,7 @@ function AcademySectionPreview({
                   color: "#7C3AED",
                 }}
               >
-                India's First Certified Home Helper Programme
+                Bengaluru's Most Rigorous Home Helper Training Programme
               </span>
             </div>
             <h2
@@ -1894,8 +2045,8 @@ function AcademySectionPreview({
             </h2>
             <p className="font-sans text-muted-foreground text-lg leading-relaxed mb-8">
               Every Flynk who enters your home has completed our comprehensive
-              training programme. Not a 2-hour orientation. A full 2-week
-              structured curriculum.
+              training programme. Not a 2-hour orientation. A rigorous 5-day
+              intensive training programme.
             </p>
 
             {/* Certificate card */}
@@ -2035,28 +2186,28 @@ function TestimonialsSection() {
     {
       stars: 5,
       quote:
-        "Finally, a service that actually shows up. Our Flynk Kavitha has been with us for 3 months now. My kitchen has never been cleaner.",
-      initials: "PL",
-      name: "Priya Lakshman",
-      location: "Koramangala · 560045",
+        "Finally a service that actually shows up every single morning. My Flynk knows exactly how I like the kitchen. It feels like having someone you actually trust.",
+      initials: "SR",
+      name: "Smitha R.",
+      location: "Thanisandra, Bengaluru",
       color: "#7C3AED",
     },
     {
       stars: 5,
       quote:
-        "The shadow Flynk thing is real — our regular was sick once and someone new showed up within the hour. No panic. No scrambling.",
-      initials: "RS",
-      name: "Rahul Sharma",
-      location: "HSR Layout",
+        "The Shadow Flynk guarantee is real — our regular was sick once and someone showed up within the hour. No panic. No scrambling.",
+      initials: "KM",
+      name: "Karthik M.",
+      location: "Manyata Tech Park Area, Bengaluru",
       color: "#F59E0B",
     },
     {
       stars: 5,
       quote:
-        "₹4,999 sounds like a lot until you realise it's ₹166/day for a clean home and a trusted person. Best subscription I have.",
-      initials: "AD",
-      name: "Ananya Desai",
-      location: "Indira Nagar",
+        "₹4,999 sounds like a lot until you realise it is ₹166 a day for a clean home and a person your family actually trusts. Best decision this year.",
+      initials: "DS",
+      name: "Deepa S.",
+      location: "Thanisandra, Bengaluru",
       color: "#12101A",
     },
   ];
@@ -2170,6 +2321,16 @@ function TestimonialsSection() {
             </motion.div>
           ))}
         </div>
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="font-sans text-center mt-8"
+          style={{ fontSize: "13px", color: "#7A75A0", fontStyle: "italic" }}
+        >
+          *Early subscriber feedback from beta trial families
+        </motion.p>
       </div>
     </section>
   );
@@ -2233,7 +2394,7 @@ function WaitlistBanner() {
             letterSpacing: "-0.05em",
           }}
         >
-          560045
+          560077
         </span>
       </div>
 
@@ -2252,7 +2413,7 @@ function WaitlistBanner() {
               letterSpacing: "-0.02em",
             }}
           >
-            We're live now in Bengaluru 560045
+            We're live now in Bengaluru 560077
           </h2>
           <p className="font-sans text-white/80 text-lg mb-10">
             Early bird price: ₹4,999/month — once we go public it's
@@ -2335,7 +2496,7 @@ function BlogPreviewSection({
       gradientTo: "#7C3AED",
       emoji: "📍",
       tag: "Cities",
-      title: "Why we chose 560045 first — and what it means for Bengaluru",
+      title: "Why we chose 560077 first — and what it means for Bengaluru",
       excerpt:
         "We could have launched across 50 pincodes. We chose one. Here's why quality-first matters more than scale.",
       readTime: "3 min read",
@@ -2364,7 +2525,7 @@ function BlogPreviewSection({
               letterSpacing: "-0.02em",
             }}
           >
-            From the flynk<span className="gradient-text">.</span> journal
+            From the <span style={{ color: "#3D0066" }}>FLYNK</span> journal
           </h2>
           <button
             type="button"
@@ -2472,8 +2633,8 @@ function BlogPreviewSection({
 function FAQSection() {
   const faqs = [
     {
-      q: "How does the 3-day free trial work?",
-      a: "We send a certified Flynk to your home for 3 consecutive days, completely free. No credit card, no upfront payment, no commitment. After the trial, if you'd like to continue, you simply choose a plan. If not, there's nothing to cancel and nothing to pay.",
+      q: "How does the 7-day free trial work?",
+      a: "We send a certified Flynk to your home for 7 consecutive days, completely free. No credit card, no upfront payment, no commitment. After the trial, if you'd like to continue, you simply choose a plan. If not, there's nothing to cancel and nothing to pay.",
     },
     {
       q: "What happens if my Flynk is absent?",
@@ -2489,11 +2650,11 @@ function FAQSection() {
     },
     {
       q: "Is flynk. available in my area?",
-      a: "We're currently live only in Bengaluru 560045. We're expanding one pincode at a time — join the waitlist for your area and we'll notify you first.",
+      a: "We're currently live only in Bengaluru 560077. We're expanding one pincode at a time — join the waitlist for your area and we'll notify you first.",
     },
     {
       q: "What does Flynk Academy certification mean?",
-      a: "Every Flynk completes a 2-week training programme covering cleaning techniques, safety protocols, communication standards, and professionalism. Only those who pass are deployed.",
+      a: "Every Flynk completes a 5-day intensive training programme covering cleaning techniques, safety protocols, communication standards, and professionalism. Only those who pass are deployed.",
     },
     {
       q: "Does it include cooking or childcare?",
@@ -2501,7 +2662,7 @@ function FAQSection() {
     },
     {
       q: "What is the early bird price and when does it expire?",
-      a: "The early bird price is ₹4,999/month — available only for the 560045 waitlist. Once we launch publicly, the standard price will be ₹6,999/month. Your rate is locked for life as long as you stay subscribed.",
+      a: "The early bird price is ₹4,999/month — available only for the 560077 waitlist. Once we launch publicly, the standard price will be ₹6,999/month. Your rate is locked for life as long as you stay subscribed.",
     },
   ];
 
@@ -2548,6 +2709,29 @@ function FAQSection() {
             </AccordionItem>
           ))}
         </Accordion>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mt-12 pt-8 border-t border-border"
+        >
+          <p className="font-sans text-base text-muted-foreground mb-4">
+            Still have questions?
+          </p>
+          <a
+            href="https://wa.me/919535708093?text=Hi%20flynk!%20I%20have%20a%20question%20about%20your%20service"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-ocid="faq.whatsapp_button"
+            className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full text-base font-semibold border-2 transition-all duration-200 hover:bg-green-50"
+            style={{ borderColor: "#25D366", color: "#25D366" }}
+            aria-label="Chat with flynk. on WhatsApp"
+          >
+            <SiWhatsapp className="w-5 h-5" />
+            Chat with us on WhatsApp →
+          </a>
+        </motion.div>
       </div>
     </section>
   );
@@ -2568,26 +2752,18 @@ function Footer({ onWaitlist, onNavigate }: FooterProps) {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-0.5">
-              <span className="font-serif text-2xl font-bold text-white">
-                flynk
-              </span>
               <span
                 className="font-serif text-2xl font-bold"
-                style={{
-                  background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
+                style={{ color: "#3D0066" }}
               >
-                .
+                FLYNK
               </span>
             </div>
             <p className="font-sans text-sm text-white/50 leading-relaxed">
               A clean home. Every single day. Guaranteed.
             </p>
             <p className="font-sans text-xs text-white/30">
-              Currently serving: Bengaluru 560045
+              Currently serving: Bengaluru 560077
             </p>
             {/* Social */}
             <div className="flex gap-3">
@@ -2630,8 +2806,7 @@ function Footer({ onWaitlist, onNavigate }: FooterProps) {
                 { label: "How It Works", href: "#how-it-works" },
                 { label: "Flynk Academy", action: () => onNavigate("academy") },
                 { label: "Blog", action: () => onNavigate("blog") },
-                { label: "About flynk.", href: "#hero" },
-                { label: "Careers", href: "#" },
+                { label: "About FLYNK", href: "#hero" },
               ].map((item) =>
                 item.href ? (
                   <li key={item.label}>
@@ -2715,11 +2890,11 @@ function Footer({ onWaitlist, onNavigate }: FooterProps) {
               </li>
               <li>
                 <a
-                  href="mailto:hello@flynknow.com"
+                  href="mailto:hello@getflynk.in"
                   className="font-sans text-sm text-white/50 hover:text-white transition-colors"
                   data-ocid="footer.link"
                 >
-                  hello@flynknow.com
+                  hello@getflynk.in
                 </a>
               </li>
               <li>
@@ -2758,15 +2933,8 @@ function Footer({ onWaitlist, onNavigate }: FooterProps) {
         {/* Bottom row */}
         <div className="border-t border-white/8 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="font-sans text-sm text-white/30">
-            © {CURRENT_YEAR} flynk. All rights reserved. Built with love using{" "}
-            <a
-              href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== "undefined" ? window.location.hostname : "flynknow.com")}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline hover:text-white/60"
-            >
-              caffeine.ai
-            </a>
+            © {CURRENT_YEAR} FLYNK. All rights reserved. Built with ❤️ in
+            Bengaluru
           </p>
           <div className="flex gap-5">
             {[
@@ -2886,7 +3054,7 @@ export default function App() {
         <HowItWorksSection />
         <ServicesSection />
         <PricingSection onWaitlist={() => setWaitlistOpen(true)} />
-        <WhyFlynkSection />
+        <WhyFlynkSection onWaitlist={() => setWaitlistOpen(true)} />
         <StatsSection />
         <AcademySectionPreview onNavigate={handleNavigate} />
         <TestimonialsSection />

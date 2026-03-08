@@ -41,7 +41,7 @@ That's what flynk. is building. Not a gig economy. A subscription to peace of mi
     tag: "Inside flynk.",
     title: "Inside the Flynk Academy: How we train and certify every helper",
     excerpt:
-      "We don't hire off the street. Every Flynk spends two weeks in structured training before they ever enter a home. Here's what that programme actually looks like.",
+      "We don't hire off the street. Every Flynk completes a 5-day intensive training programme before they ever enter a home. Here's what that programme actually looks like.",
     readTime: "4 min read",
     gradientFrom: "#F59E0B",
     gradientTo: "#7C3AED",
@@ -53,7 +53,7 @@ That's not how flynk. works.
 
 **The Flynk Academy**
 
-Every Flynk completes a 2-week structured training programme before they're ever assigned to a home. We call it the Flynk Academy.
+Every Flynk completes a 5-day intensive training programme before they're ever assigned to a home. We call it the Flynk Academy.
 
 Week one: hands-on cleaning technique. Correct floor mopping. Safe bathroom cleaning. Efficient dusting. How to handle fragile items. How to move through a home without creating more work.
 
@@ -71,12 +71,12 @@ Only Flynks who pass all assessments — practical and professional — are cert
 
 Certification isn't a one-time event. Every Flynk is re-assessed monthly. Standards maintained, not just promised.
 
-This is India's first certified home helper programme. We built it because we believe Flynks deserve real training, and you deserve someone who actually knows what they're doing.
+This is Bengaluru's most rigorous home helper training programme. We built it because we believe Flynks deserve real training, and you deserve someone who actually knows what they're doing.
     `,
   },
   {
     tag: "Cities",
-    title: "Why we chose 560045 first — and what it means for Bengaluru",
+    title: "Why we chose 560077 first — and what it means for Bengaluru",
     excerpt:
       "We could have launched across 50 pincodes. We chose one. Here's why quality-first matters more than scale — and what our expansion plan actually looks like.",
     readTime: "3 min read",
@@ -88,9 +88,9 @@ When we decided to launch flynk. in Bengaluru, the easy move was to go wide. Cov
 
 We chose the opposite.
 
-**Why 560045**
+**Why 560077**
 
-Bengaluru 560045 is a dense, high-demand area with a mix of working professionals, young families, and established households. It's a pincode where people genuinely need reliable daily home help — and where the on-demand model has consistently let them down.
+Bengaluru 560077 is a dense, high-demand area with a mix of working professionals, young families, and established households. It's a pincode where people genuinely need reliable daily home help — and where the on-demand model has consistently let them down.
 
 It's also a pincode we could serve well. Not just adequately. Well.
 
@@ -98,11 +98,11 @@ It's also a pincode we could serve well. Not just adequately. Well.
 
 The reason we expand slowly is simple: quality doesn't scale automatically. For every new pincode we enter, we need trained Flynks who live in that area. We need shadow Flynk coverage. We need the infrastructure to respond if something goes wrong.
 
-Launching in 560045 first lets us build that infrastructure properly. We learn what works. We fix what doesn't. We earn trust before we ask for it across the city.
+Launching in 560077 first lets us build that infrastructure properly. We learn what works. We fix what doesn't. We earn trust before we ask for it across the city.
 
 **What this means for you**
 
-If you're in 560045 — join the waitlist now. Early bird pricing is ₹4,999/month and it's locked for life once you subscribe.
+If you're in 560077 — join the waitlist now. Early bird pricing is ₹4,999/month and it's locked for life once you subscribe.
 
 If you're in another Bengaluru pincode — join the waitlist for your area. We're expanding methodically. We'll notify you the moment your pincode goes live.
 
@@ -128,14 +128,14 @@ export function BlogPage({ onBack }: BlogPageProps) {
             data-ocid="blog.back_button"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to flynk.
+            Back to FLYNK
           </button>
           <button
             type="button"
             onClick={onBack}
             className="font-serif text-2xl font-bold text-foreground"
           >
-            flynk<span className="gradient-text">.</span>
+            <span style={{ color: "#3D0066" }}>FLYNK</span>
           </button>
           <a
             href={WA_LINK}
@@ -160,7 +160,7 @@ export function BlogPage({ onBack }: BlogPageProps) {
             The Journal
           </p>
           <h1 className="font-serif text-5xl lg:text-6xl text-foreground mb-6">
-            From the flynk<span className="gradient-text">.</span> journal
+            From the <span style={{ color: "#3D0066" }}>FLYNK</span> journal
           </h1>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
             Stories, insights, and honest takes on home care, trust, and
@@ -251,15 +251,7 @@ export function BlogPage({ onBack }: BlogPageProps) {
 
       <footer className="border-t border-border py-8 text-center">
         <p className="text-sm text-muted-foreground">
-          © {new Date().getFullYear()} flynk. — Built with love using{" "}
-          <a
-            href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== "undefined" ? window.location.hostname : "flynknow.com")}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline hover:text-foreground"
-          >
-            caffeine.ai
-          </a>
+          © {new Date().getFullYear()} FLYNK — Built with ❤️ in Bengaluru
         </p>
       </footer>
     </div>

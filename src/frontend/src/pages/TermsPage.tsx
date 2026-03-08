@@ -46,7 +46,7 @@ export function TermsPage({ onBack }: TermsPageProps) {
             {[
               {
                 heading: "1. Service Overview",
-                body: "flynk. provides a daily home cleaning subscription service in Bengaluru, India. The service is currently available only in pincode 560045. By joining the waitlist or subscribing, you agree to these terms.",
+                body: "flynk. provides a daily home cleaning subscription service in Bengaluru, India. The service is currently available only in pincode 560077. By joining the waitlist or subscribing, you agree to these terms.",
               },
               {
                 heading: "2. Subscription Terms",
@@ -70,7 +70,7 @@ export function TermsPage({ onBack }: TermsPageProps) {
               },
               {
                 heading: "7. Liability",
-                body: "flynk. carries insurance for Flynks operating in your home. In the event of accidental damage, please contact us at hello@flynknow.com within 24 hours. flynk. is not liable for pre-existing damage or items that were improperly secured.",
+                body: "flynk. carries insurance for Flynks operating in your home. In the event of accidental damage, please contact us at hello@getflynk.in within 24 hours. flynk. is not liable for pre-existing damage or items that were improperly secured.",
               },
               {
                 heading: "8. Termination",
@@ -78,7 +78,7 @@ export function TermsPage({ onBack }: TermsPageProps) {
               },
               {
                 heading: "9. Contact",
-                body: "For service questions or disputes, contact hello@flynknow.com.",
+                body: "For service questions or disputes, contact hello@getflynk.in.",
               },
             ].map((section) => (
               <div key={section.heading}>

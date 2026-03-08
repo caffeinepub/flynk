@@ -8,7 +8,7 @@ const steps = [
   {
     num: "01",
     title: "Training Programme",
-    desc: "2 weeks of hands-on cleaning technique training. Correct floor mopping, safe bathroom cleaning, efficient dusting, handling fragile items, and working through a home systematically. Tested and certified at every stage.",
+    desc: "5-day intensive training programme. Correct floor mopping, safe bathroom cleaning, efficient dusting, handling fragile items, and working through a home systematically. Tested and certified at every stage.",
     detail:
       "Flynks learn by doing — not just watching. Every technique is practised until it becomes second nature.",
   },
@@ -57,14 +57,14 @@ export function AcademyPage({ onBack }: AcademyPageProps) {
             data-ocid="academy.back_button"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to flynk.
+            Back to FLYNK
           </button>
           <button
             type="button"
             onClick={onBack}
             className="font-serif text-2xl font-bold text-foreground"
           >
-            flynk<span className="gradient-text">.</span>
+            <span style={{ color: "#3D0066" }}>FLYNK</span>
           </button>
           <a
             href={WA_LINK}
@@ -97,7 +97,7 @@ export function AcademyPage({ onBack }: AcademyPageProps) {
                   className="w-2 h-2 rounded-full bg-teal badge-blink inline-block"
                   style={{ backgroundColor: "#F59E0B" }}
                 />
-                India's First Certified Home Helper Programme
+                Bengaluru's Most Rigorous Home Helper Training Programme
               </span>
               <h1 className="font-serif text-5xl lg:text-7xl text-white mb-6 leading-tight">
                 The Flynk
@@ -115,8 +115,8 @@ export function AcademyPage({ onBack }: AcademyPageProps) {
               </h1>
               <p className="text-xl text-white/70 max-w-2xl mx-auto leading-relaxed">
                 We don't hire off the street. Before a Flynk enters your home,
-                they complete two weeks of structured training, full background
-                verification, and professional certification.
+                they complete a 5-day intensive training programme, full
+                background verification, and professional certification.
               </p>
             </motion.div>
           </div>
@@ -258,7 +258,7 @@ export function AcademyPage({ onBack }: AcademyPageProps) {
                     </div>
 
                     <p className="text-white/50 text-xs">
-                      flynk. · www.flynknow.com
+                      FLYNK · www.flynknow.com
                     </p>
                   </div>
                 </div>
@@ -266,7 +266,7 @@ export function AcademyPage({ onBack }: AcademyPageProps) {
                 {/* Stats below certificate */}
                 <div className="grid grid-cols-3 gap-4 mt-6">
                   {[
-                    { value: "2 weeks", label: "Training" },
+                    { value: "5 days", label: "Training" },
                     { value: "3-step", label: "Background check" },
                     { value: "Monthly", label: "Re-assessment" },
                   ].map((stat) => (
@@ -358,7 +358,7 @@ export function AcademyPage({ onBack }: AcademyPageProps) {
                 }}
                 data-ocid="academy.primary_button"
               >
-                Join the flynk. Waitlist
+                Join the FLYNK Waitlist
               </a>
             </motion.div>
           </div>
@@ -367,15 +367,7 @@ export function AcademyPage({ onBack }: AcademyPageProps) {
 
       <footer className="border-t border-border py-8 text-center bg-background">
         <p className="text-sm text-muted-foreground">
-          © {new Date().getFullYear()} flynk. — Built with love using{" "}
-          <a
-            href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== "undefined" ? window.location.hostname : "flynknow.com")}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline hover:text-foreground"
-          >
-            caffeine.ai
-          </a>
+          © {new Date().getFullYear()} FLYNK — Built with ❤️ in Bengaluru
         </p>
       </footer>
     </div>

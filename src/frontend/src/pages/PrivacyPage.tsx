@@ -50,7 +50,7 @@ export function PrivacyPage({ onBack }: PrivacyPageProps) {
               },
               {
                 heading: "2. How We Use Your Information",
-                body: "We use your contact information solely to communicate with you about flynk. services, waitlist status, and updates relevant to your area (560045). We do not sell your data to third parties.",
+                body: "We use your contact information solely to communicate with you about flynk. services, waitlist status, and updates relevant to your area (560077). We do not sell your data to third parties.",
               },
               {
                 heading: "3. WhatsApp Communication",
@@ -62,7 +62,7 @@ export function PrivacyPage({ onBack }: PrivacyPageProps) {
               },
               {
                 heading: "5. Data Retention",
-                body: "We retain your data for as long as you are a flynk. customer or waitlist member. You may request deletion of your data at any time by emailing hello@flynknow.com.",
+                body: "We retain your data for as long as you are a flynk. customer or waitlist member. You may request deletion of your data at any time by emailing hello@getflynk.in.",
               },
               {
                 heading: "6. Cookies",
@@ -70,7 +70,7 @@ export function PrivacyPage({ onBack }: PrivacyPageProps) {
               },
               {
                 heading: "7. Contact",
-                body: "For privacy-related requests, contact us at hello@flynknow.com or message us on WhatsApp.",
+                body: "For privacy-related requests, contact us at hello@getflynk.in or message us on WhatsApp.",
               },
             ].map((section) => (
               <div key={section.heading}>
