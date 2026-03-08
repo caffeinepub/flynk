@@ -4,13 +4,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Input } from "@/components/ui/input";
 import { Menu, Star, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { SiInstagram, SiLinkedin, SiWhatsapp, SiX } from "react-icons/si";
-import { HomeType } from "./backend.d";
-import { useActor } from "./hooks/useActor";
 import { AcademyPage } from "./pages/AcademyPage";
 import { AdminPage } from "./pages/AdminPage";
 import { BlogPage } from "./pages/BlogPage";
@@ -20,162 +17,16 @@ import { TermsPage } from "./pages/TermsPage";
 // ─── Constants ──────────────────────────────────────────────────────────────
 const WA_NUMBER = "919535708093";
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=Hi%20Flynk%2C%20I%20want%20to%20know%20more%20about%20the%20services.`;
-const WA_TRIAL_LINK = `https://wa.me/${WA_NUMBER}?text=Hey%20Flynk%2C%20I%20want%20to%20start%207%20day%20free%20trial%20for%20my%20home.`;
+const WA_TRIAL_LINK = `https://wa.me/${WA_NUMBER}?text=Hey%20Flynk%2C%20I%20want%20to%20start%20my%207%20day%20free%20trial`;
 const CURRENT_YEAR = new Date().getFullYear();
-
-// ─── Waitlist Modal ──────────────────────────────────────────────────────────
-
-interface WaitlistModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
-  const handleTrialClick = () => {
-    window.open(WA_TRIAL_LINK, "_blank", "noopener,noreferrer");
-    onClose();
-  };
-
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
-          style={{
-            backdropFilter: "blur(12px)",
-            backgroundColor: "rgba(8,6,16,0.75)",
-          }}
-          onPointerDown={(e) => {
-            if (e.target === e.currentTarget) onClose();
-          }}
-          data-ocid="waitlist.modal"
-        >
-          <motion.div
-            initial={{ scale: 0.92, opacity: 0, y: 24 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.92, opacity: 0, y: 24 }}
-            transition={{ type: "spring", damping: 28, stiffness: 320 }}
-            className="w-full max-w-md rounded-3xl overflow-hidden"
-            style={{
-              background: "rgba(255,255,255,0.055)",
-              border: "1px solid rgba(124,58,237,0.35)",
-              backdropFilter: "blur(16px)",
-              boxShadow:
-                "0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(124,58,237,0.2), 0 0 60px rgba(124,58,237,0.12), inset 0 1px 0 rgba(255,255,255,0.08)",
-            }}
-            onPointerDown={(e) => e.stopPropagation()}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Top gradient bar */}
-            <div
-              className="h-[3px] w-full"
-              style={{
-                background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
-              }}
-            />
-
-            {/* Atmospheric glow */}
-            <div
-              className="absolute inset-0 pointer-events-none rounded-3xl"
-              style={{
-                background:
-                  "radial-gradient(ellipse 70% 50% at 50% 0%, rgba(124,58,237,0.14) 0%, transparent 70%)",
-              }}
-              aria-hidden="true"
-            />
-
-            <div className="p-8 relative z-10">
-              <div className="flex items-start justify-between mb-6">
-                <div>
-                  <h2
-                    className="font-serif text-2xl"
-                    style={{ color: "rgba(255,255,255,0.95)" }}
-                  >
-                    Start Your 7-Day Free Trial
-                  </h2>
-                  <p
-                    className="text-sm mt-1"
-                    style={{ color: "rgba(255,255,255,0.45)" }}
-                  >
-                    No credit card. No commitment. Just a clean home.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  aria-label="Close modal"
-                  onClick={onClose}
-                  data-ocid="waitlist.close_button"
-                  className="w-8 h-8 rounded-full flex items-center justify-center transition-colors"
-                  style={{
-                    background: "rgba(255,255,255,0.07)",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                  }}
-                >
-                  <X
-                    className="w-4 h-4"
-                    style={{ color: "rgba(255,255,255,0.5)" }}
-                  />
-                </button>
-              </div>
-
-              <div className="py-4 text-center space-y-6">
-                <div
-                  className="w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto"
-                  style={{
-                    background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
-                  }}
-                >
-                  🏠
-                </div>
-                <div>
-                  <p
-                    className="font-sans text-base leading-relaxed mb-1"
-                    style={{ color: "rgba(255,255,255,0.75)" }}
-                  >
-                    Tap the button below to start your free trial on WhatsApp.
-                    We'll confirm your slot within 2 hours.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={handleTrialClick}
-                  data-ocid="trial.claim_button"
-                  className="w-full h-14 rounded-full text-white font-semibold text-base btn-glow flex items-center justify-center gap-2.5 transition-all duration-200 hover:opacity-90"
-                  style={{
-                    background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
-                    border: "none",
-                  }}
-                  aria-label="Start 7-day free trial on WhatsApp"
-                >
-                  <SiWhatsapp className="w-5 h-5" />
-                  Start My 7-Day Free Trial →
-                </button>
-                <p
-                  className="text-xs"
-                  style={{ color: "rgba(255,255,255,0.35)" }}
-                >
-                  ✓ 7 days free · ✓ No card needed · ✓ Opens WhatsApp
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-}
 
 // ─── Navbar ──────────────────────────────────────────────────────────────────
 
 interface NavbarProps {
-  onWaitlist: () => void;
   onNavigate: (page: string) => void;
 }
 
-function Navbar({ onWaitlist, onNavigate }: NavbarProps) {
+function Navbar({ onNavigate }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -257,18 +108,19 @@ function Navbar({ onWaitlist, onNavigate }: NavbarProps) {
               <SiWhatsapp className="w-4 h-4" style={{ color: "#25D366" }} />
               WhatsApp Us
             </a>
-            <button
-              type="button"
-              onClick={onWaitlist}
-              data-ocid="nav.primary_button"
+            <a
+              href={WA_TRIAL_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-ocid="nav.book_trial_button"
               className="text-sm font-semibold text-white px-5 py-2.5 rounded-full transition-all duration-200 hover:opacity-90"
               style={{
                 background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
               }}
-              aria-label="Start your free trial with flynk."
+              aria-label="Book your free trial with flynk."
             >
-              Free Trial
-            </button>
+              Book Free Trial
+            </a>
           </div>
 
           {/* Mobile hamburger */}
@@ -324,20 +176,20 @@ function Navbar({ onWaitlist, onNavigate }: NavbarProps) {
                   ),
                 )}
                 <div className="px-4 pt-3 flex flex-col gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setMenuOpen(false);
-                      onWaitlist();
-                    }}
-                    data-ocid="nav.primary_button"
-                    className="w-full py-3 rounded-full text-white font-semibold text-sm"
+                  <a
+                    href={WA_TRIAL_LINK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-ocid="nav.book_trial_button"
+                    className="w-full py-3 rounded-full text-white font-semibold text-sm text-center"
                     style={{
                       background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
                     }}
+                    onClick={() => setMenuOpen(false)}
+                    aria-label="Book your free trial with flynk."
                   >
-                    Free Trial
-                  </button>
+                    Book Free Trial
+                  </a>
                   <a
                     href={WA_LINK}
                     target="_blank"
@@ -364,7 +216,7 @@ function Navbar({ onWaitlist, onNavigate }: NavbarProps) {
 
 // ─── Hero Section ─────────────────────────────────────────────────────────────
 
-function HeroSection({ onWaitlist }: { onWaitlist: () => void }) {
+function HeroSection() {
   return (
     <section
       id="hero"
@@ -505,18 +357,19 @@ function HeroSection({ onWaitlist }: { onWaitlist: () => void }) {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-3 mb-7">
-              <button
-                type="button"
-                onClick={onWaitlist}
-                data-ocid="hero.primary_button"
+              <a
+                href={WA_TRIAL_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-ocid="hero.book_trial_primary_button"
                 className="inline-flex items-center justify-center px-8 py-4 rounded-full text-base font-semibold text-white btn-glow transition-all duration-200 hover:opacity-90"
                 style={{
                   background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
                 }}
-                aria-label="Start your 7-day free trial — no card needed"
+                aria-label="Book your 7-day free trial — no card needed"
               >
-                Start 7-Day Free Trial →
-              </button>
+                Book Free Trial →
+              </a>
               <a
                 href={WA_LINK}
                 target="_blank"
@@ -893,7 +746,7 @@ function HowItWorksSection() {
       num: "01",
       emoji: "🏠",
       title: "Tell us about your home",
-      desc: "WhatsApp us or fill the waitlist form. Tell us your home size, schedule preference, and pincode.",
+      desc: "WhatsApp us to book your free trial. Tell us your home size, schedule preference, and pincode.",
     },
     {
       num: "02",
@@ -1206,7 +1059,7 @@ function applyDiscount(base: number, discount: number): string {
   return `₹${final.toLocaleString("en-IN")}`;
 }
 
-function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
+function PricingSection() {
   const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly");
 
   const starterFeatures = [
@@ -1451,19 +1304,20 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
                 ))}
               </div>
 
-              <button
-                type="button"
-                onClick={onWaitlist}
+              <a
+                href={WA_TRIAL_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
                 data-ocid="pricing.starter_button"
-                className="w-full py-3.5 rounded-full text-white font-semibold font-sans text-sm transition-all duration-200 hover:opacity-80"
+                className="w-full py-3.5 rounded-full text-white font-semibold font-sans text-sm transition-all duration-200 hover:opacity-80 flex items-center justify-center"
                 style={{
                   background: "rgba(255,255,255,0.08)",
                   border: "1px solid rgba(255,255,255,0.12)",
                 }}
-                aria-label="Start your free trial on the Starter plan"
+                aria-label="Book your free trial on the Starter plan"
               >
-                Start Free Trial →
-              </button>
+                Book Free Trial →
+              </a>
               <p className="font-sans text-xs text-center text-white/40 mt-2">
                 7 days free · No card needed
               </p>
@@ -1583,18 +1437,19 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
                 ))}
               </div>
 
-              <button
-                type="button"
-                onClick={onWaitlist}
-                data-ocid="pricing.primary_button"
-                className="w-full py-4 rounded-full text-white font-semibold font-sans text-sm btn-glow transition-all duration-200 hover:opacity-90"
+              <a
+                href={WA_TRIAL_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-ocid="pricing.standard_button"
+                className="w-full py-4 rounded-full text-white font-semibold font-sans text-sm btn-glow transition-all duration-200 hover:opacity-90 flex items-center justify-center"
                 style={{
                   background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
                 }}
-                aria-label="Start your free trial on the Standard plan"
+                aria-label="Book your free trial on the Standard plan"
               >
-                Start Free Trial →
-              </button>
+                Book Free Trial →
+              </a>
               <p className="font-sans text-xs text-center text-white/35 mt-3">
                 ✓ 7 days free · No card needed · Early bird rate locked for life
               </p>
@@ -1669,19 +1524,20 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
                 ))}
               </div>
 
-              <button
-                type="button"
-                onClick={onWaitlist}
+              <a
+                href={WA_TRIAL_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
                 data-ocid="pricing.plus_button"
-                className="w-full py-3.5 rounded-full text-white font-semibold font-sans text-sm transition-all duration-200 hover:opacity-80"
+                className="w-full py-3.5 rounded-full text-white font-semibold font-sans text-sm transition-all duration-200 hover:opacity-80 flex items-center justify-center"
                 style={{
                   background: "rgba(255,255,255,0.08)",
                   border: "1px solid rgba(255,255,255,0.12)",
                 }}
-                aria-label="Start your free trial on the Plus plan"
+                aria-label="Book your free trial on the Plus plan"
               >
-                Start Free Trial →
-              </button>
+                Book Free Trial →
+              </a>
               <p className="font-sans text-xs text-center text-white/40 mt-2">
                 7 days free · No card needed
               </p>
@@ -1718,7 +1574,7 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
 
 // ─── Why flynk. ───────────────────────────────────────────────────────────────
 
-function WhyFlynkSection({ onWaitlist }: { onWaitlist: () => void }) {
+function WhyFlynkSection() {
   const reasons = [
     {
       num: "01",
@@ -1823,18 +1679,19 @@ function WhyFlynkSection({ onWaitlist }: { onWaitlist: () => void }) {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-center mt-12"
         >
-          <button
-            type="button"
-            onClick={onWaitlist}
-            data-ocid="why_flynk.primary_button"
+          <a
+            href={WA_TRIAL_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-ocid="why_flynk.book_trial_button"
             className="inline-flex items-center justify-center px-8 py-4 rounded-full text-base font-semibold text-white btn-glow transition-all duration-200 hover:opacity-90"
             style={{
               background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
             }}
-            aria-label="Start your 7-day free trial"
+            aria-label="Book your 7-day free trial"
           >
-            Start Your Free 7-Day Trial →
-          </button>
+            Book Your Free Trial →
+          </a>
         </motion.div>
       </div>
     </section>
@@ -2294,44 +2151,14 @@ function TestimonialsSection() {
   );
 }
 
-// ─── Waitlist Banner ──────────────────────────────────────────────────────────
+// ─── Free Trial Banner ────────────────────────────────────────────────────────
 
-function WaitlistBanner() {
-  const [bannerPhone, setBannerPhone] = useState("");
-  const [bannerSubmitted, setBannerSubmitted] = useState(false);
-  const { actor } = useActor();
-
-  const handleBannerSubmit = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
-      if (!bannerPhone) return;
-      try {
-        if (actor) {
-          await actor.addWaitlistEntry(
-            "",
-            bannerPhone,
-            "",
-            "Bengaluru",
-            HomeType.TwoBHK,
-            BigInt(0),
-            BigInt(2),
-            BigInt(0),
-            BigInt(0),
-            "",
-          );
-        } else {
-          console.log("Banner waitlist:", { phone: bannerPhone });
-        }
-      } catch {
-        // silent
-      }
-      setBannerSubmitted(true);
-    },
-    [actor, bannerPhone],
-  );
-
+function FreeTrialBanner() {
   return (
-    <section id="waitlist" className="py-20 lg:py-28 relative overflow-hidden">
+    <section
+      id="free-trial"
+      className="py-20 lg:py-28 relative overflow-hidden"
+    >
       <div
         className="absolute inset-0"
         style={{
@@ -2371,51 +2198,29 @@ function WaitlistBanner() {
               letterSpacing: "-0.02em",
             }}
           >
-            We're live now in Bengaluru 560077
+            Start Your Free Trial Today
           </h2>
           <p className="font-sans text-white/80 text-lg mb-10">
-            Early bird price: ₹4,999/month — once we go public it's
-            ₹6,999/month.
+            7 days free. No credit card. No commitment.
             <br />
-            Lock your rate now.
+            Early bird price: ₹4,999/month — lock your rate now.
           </p>
 
-          {bannerSubmitted ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="inline-flex items-center gap-3 bg-white/15 backdrop-blur-sm rounded-full px-8 py-5"
-            >
-              <span className="text-2xl">🎉</span>
-              <p className="font-sans text-white font-semibold">
-                You're on the list! We'll WhatsApp you soon.
-              </p>
-            </motion.div>
-          ) : (
-            <form
-              onSubmit={handleBannerSubmit}
-              className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-            >
-              <Input
-                type="tel"
-                placeholder="Your WhatsApp number"
-                value={bannerPhone}
-                onChange={(e) => setBannerPhone(e.target.value)}
-                required
-                data-ocid="waitlist.phone_input"
-                className="flex-1 h-14 rounded-full bg-white border-0 px-6 text-foreground placeholder:text-muted-foreground font-sans"
-              />
-              <button
-                type="submit"
-                data-ocid="waitlist.submit_button"
-                className="h-14 px-7 rounded-full font-semibold font-sans text-white whitespace-nowrap transition-all duration-200 hover:opacity-90"
-                style={{ background: "#12101A" }}
-                aria-label="Reserve my spot on the flynk. waitlist"
-              >
-                Reserve My Spot →
-              </button>
-            </form>
-          )}
+          <a
+            href={WA_TRIAL_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-ocid="banner.book_trial_button"
+            className="inline-flex items-center justify-center gap-3 h-16 px-10 rounded-full font-semibold font-sans text-lg text-white transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5 shadow-lg"
+            style={{ background: "#12101A" }}
+            aria-label="Book your free trial on WhatsApp"
+          >
+            <SiWhatsapp className="w-6 h-6" style={{ color: "#25D366" }} />
+            Book Free Trial on WhatsApp →
+          </a>
+          <p className="font-sans text-white/55 text-sm mt-4">
+            ✓ 7 days free · ✓ No card needed · ✓ Opens WhatsApp instantly
+          </p>
         </motion.div>
       </div>
     </section>
@@ -2608,7 +2413,7 @@ function FAQSection() {
     },
     {
       q: "Is flynk. available in my area?",
-      a: "We're currently live only in Bengaluru 560077. We're expanding one pincode at a time — join the waitlist for your area and we'll notify you first.",
+      a: "We're currently live only in Bengaluru 560077. We're expanding one pincode at a time — WhatsApp us to book your free trial and we'll confirm availability.",
     },
     {
       q: "What does Flynk Academy certification mean?",
@@ -2620,7 +2425,7 @@ function FAQSection() {
     },
     {
       q: "What is the early bird price and when does it expire?",
-      a: "The early bird price is ₹4,999/month — available only for the 560077 waitlist. Once we launch publicly, the standard price will be ₹6,999/month. Your rate is locked for life as long as you stay subscribed.",
+      a: "The early bird price is ₹4,999/month — available now in 560077. Once we go public, the standard price will be ₹6,999/month. Your rate is locked for life as long as you stay subscribed.",
     },
   ];
 
@@ -2698,11 +2503,10 @@ function FAQSection() {
 // ─── Footer ───────────────────────────────────────────────────────────────────
 
 interface FooterProps {
-  onWaitlist: () => void;
   onNavigate: (page: string) => void;
 }
 
-function Footer({ onWaitlist, onNavigate }: FooterProps) {
+function Footer({ onNavigate }: FooterProps) {
   return (
     <footer style={{ background: "#0C0A14" }} data-ocid="footer.section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
@@ -2826,14 +2630,16 @@ function Footer({ onWaitlist, onNavigate }: FooterProps) {
             </h3>
             <ul className="space-y-3">
               <li>
-                <button
-                  type="button"
-                  onClick={onWaitlist}
+                <a
+                  href={WA_TRIAL_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="font-sans text-sm text-white/50 hover:text-white transition-colors"
                   data-ocid="footer.link"
+                  aria-label="Book your free trial"
                 >
-                  Join Waitlist
-                </button>
+                  Book Free Trial
+                </a>
               </li>
               <li>
                 <a
@@ -2978,7 +2784,6 @@ export default function App() {
     if (window.location.hash === "#admin") return "admin";
     return "home";
   });
-  const [waitlistOpen, setWaitlistOpen] = useState(false);
 
   const handleNavigate = (p: string) => {
     setPage(p as Page);
@@ -3004,40 +2809,28 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background font-sans">
-      {/* Waitlist Modal */}
-      <WaitlistModal
-        isOpen={waitlistOpen}
-        onClose={() => setWaitlistOpen(false)}
-      />
-
       {/* Navbar */}
-      <Navbar
-        onWaitlist={() => setWaitlistOpen(true)}
-        onNavigate={handleNavigate}
-      />
+      <Navbar onNavigate={handleNavigate} />
 
       {/* Main content */}
       <main>
-        <HeroSection onWaitlist={() => setWaitlistOpen(true)} />
+        <HeroSection />
         <Ticker />
         <ServiceChipsRow />
         <HowItWorksSection />
         <ServicesSection />
-        <PricingSection onWaitlist={() => setWaitlistOpen(true)} />
-        <WhyFlynkSection onWaitlist={() => setWaitlistOpen(true)} />
+        <PricingSection />
+        <WhyFlynkSection />
         <StatsSection />
         <AcademySectionPreview onNavigate={handleNavigate} />
         <TestimonialsSection />
-        <WaitlistBanner />
+        <FreeTrialBanner />
         <BlogPreviewSection onNavigate={handleNavigate} />
         <FAQSection />
       </main>
 
       {/* Footer */}
-      <Footer
-        onWaitlist={() => setWaitlistOpen(true)}
-        onNavigate={handleNavigate}
-      />
+      <Footer onNavigate={handleNavigate} />
 
       {/* Floating WhatsApp */}
       <FloatingWhatsApp />

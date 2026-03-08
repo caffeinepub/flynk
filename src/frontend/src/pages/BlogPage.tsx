@@ -1,8 +1,8 @@
 import { ArrowLeft, Clock } from "lucide-react";
 import { motion } from "motion/react";
 
-const WA_NUMBER = "[YOUR_WHATSAPP_NUMBER]";
-const WA_LINK = `https://wa.me/91${WA_NUMBER}?text=Hi%20flynk!%20I%27d%20like%20to%20know%20more%20about%20your%20services`;
+const WA_NUMBER = "9535708093";
+const WA_LINK = `https://wa.me/91${WA_NUMBER}?text=Hey%20Flynk%2C%20I%20want%20to%20start%207%20day%20free%20trial%20for%20my%20home.`;
 
 const posts = [
   {
@@ -144,7 +144,7 @@ export function BlogPage({ onBack }: BlogPageProps) {
             className="text-sm font-semibold text-white px-4 py-2 rounded-full"
             style={{ background: "linear-gradient(135deg, #7C3AED, #F59E0B)" }}
           >
-            Join Waitlist
+            Book Free Trial
           </a>
         </div>
       </header>
