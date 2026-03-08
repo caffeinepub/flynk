@@ -4,16 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Menu, Star, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
@@ -21,13 +12,15 @@ import { SiInstagram, SiLinkedin, SiWhatsapp, SiX } from "react-icons/si";
 import { HomeType } from "./backend.d";
 import { useActor } from "./hooks/useActor";
 import { AcademyPage } from "./pages/AcademyPage";
+import { AdminPage } from "./pages/AdminPage";
 import { BlogPage } from "./pages/BlogPage";
 import { PrivacyPage } from "./pages/PrivacyPage";
 import { TermsPage } from "./pages/TermsPage";
 
 // ─── Constants ──────────────────────────────────────────────────────────────
-const WA_NUMBER = "[YOUR_WHATSAPP_NUMBER]";
-const WA_LINK = `https://wa.me/91${WA_NUMBER}?text=Hi%20flynk!%20I%27d%20like%20to%20know%20more%20about%20your%20services`;
+const WA_NUMBER = "919535708093";
+const WA_LINK = `https://wa.me/${WA_NUMBER}?text=Hi%20Flynk%2C%20I%20want%20to%20know%20more%20about%20the%20services.`;
+const WA_TRIAL_LINK = `https://wa.me/${WA_NUMBER}?text=Hey%20Flynk%2C%20I%20want%20to%20start%207%20day%20free%20trial%20for%20my%20home.`;
 const CURRENT_YEAR = new Date().getFullYear();
 
 // ─── Waitlist Modal ──────────────────────────────────────────────────────────
@@ -38,60 +31,9 @@ interface WaitlistModalProps {
 }
 
 function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [homeType, setHomeType] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const { actor } = useActor();
-
-  const handleSubmit = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
-      if (!name || !phone || !homeType) return;
-      setLoading(true);
-      try {
-        if (actor) {
-          const htMap: Record<string, HomeType> = {
-            PG: HomeType.PG,
-            OneBHK: HomeType.OneBHK,
-            TwoBHK: HomeType.TwoBHK,
-            ThreeBHK: HomeType.ThreeBHK,
-            FourBHKPlus: HomeType.FourBHKPlus,
-          };
-          await actor.addWaitlistEntry(
-            name,
-            phone,
-            "",
-            "Bengaluru",
-            htMap[homeType] ?? HomeType.TwoBHK,
-            BigInt(0),
-            BigInt(2),
-            BigInt(0),
-            BigInt(0),
-            "",
-          );
-        } else {
-          console.log("Waitlist entry:", { name, phone, homeType });
-        }
-        setSubmitted(true);
-      } catch {
-        setSubmitted(true);
-      } finally {
-        setLoading(false);
-      }
-    },
-    [actor, name, phone, homeType],
-  );
-
-  const handleClose = () => {
+  const handleTrialClick = () => {
+    window.open(WA_TRIAL_LINK, "_blank", "noopener,noreferrer");
     onClose();
-    setTimeout(() => {
-      setSubmitted(false);
-      setName("");
-      setPhone("");
-      setHomeType("");
-    }, 300);
   };
 
   return (
@@ -103,10 +45,12 @@ function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-[100] flex items-center justify-center p-4"
           style={{
-            backdropFilter: "blur(8px)",
-            backgroundColor: "rgba(12,10,20,0.6)",
+            backdropFilter: "blur(12px)",
+            backgroundColor: "rgba(8,6,16,0.75)",
           }}
-          onClick={handleClose}
+          onPointerDown={(e) => {
+            if (e.target === e.currentTarget) onClose();
+          }}
           data-ocid="waitlist.modal"
         >
           <motion.div
@@ -114,156 +58,108 @@ function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.92, opacity: 0, y: 24 }}
             transition={{ type: "spring", damping: 28, stiffness: 320 }}
-            className="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden"
+            className="w-full max-w-md rounded-3xl overflow-hidden"
+            style={{
+              background: "rgba(255,255,255,0.055)",
+              border: "1px solid rgba(124,58,237,0.35)",
+              backdropFilter: "blur(16px)",
+              boxShadow:
+                "0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(124,58,237,0.2), 0 0 60px rgba(124,58,237,0.12), inset 0 1px 0 rgba(255,255,255,0.08)",
+            }}
+            onPointerDown={(e) => e.stopPropagation()}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Top gradient bar */}
             <div
-              className="h-1.5 w-full"
+              className="h-[3px] w-full"
               style={{
                 background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
               }}
             />
 
-            <div className="p-8">
+            {/* Atmospheric glow */}
+            <div
+              className="absolute inset-0 pointer-events-none rounded-3xl"
+              style={{
+                background:
+                  "radial-gradient(ellipse 70% 50% at 50% 0%, rgba(124,58,237,0.14) 0%, transparent 70%)",
+              }}
+              aria-hidden="true"
+            />
+
+            <div className="p-8 relative z-10">
               <div className="flex items-start justify-between mb-6">
                 <div>
-                  <h2 className="font-serif text-2xl text-foreground">
+                  <h2
+                    className="font-serif text-2xl"
+                    style={{ color: "rgba(255,255,255,0.95)" }}
+                  >
                     Start Your 7-Day Free Trial
                   </h2>
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <p
+                    className="text-sm mt-1"
+                    style={{ color: "rgba(255,255,255,0.45)" }}
+                  >
                     No credit card. No commitment. Just a clean home.
                   </p>
                 </div>
                 <button
                   type="button"
                   aria-label="Close modal"
-                  onClick={handleClose}
+                  onClick={onClose}
                   data-ocid="waitlist.close_button"
-                  className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center hover:bg-border transition-colors"
+                  className="w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+                  style={{
+                    background: "rgba(255,255,255,0.07)",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                  }}
                 >
-                  <X className="w-4 h-4 text-muted-foreground" />
+                  <X
+                    className="w-4 h-4"
+                    style={{ color: "rgba(255,255,255,0.5)" }}
+                  />
                 </button>
               </div>
 
-              {submitted ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="text-center py-8"
-                  data-ocid="waitlist.success_state"
+              <div className="py-4 text-center space-y-6">
+                <div
+                  className="w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto"
+                  style={{
+                    background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
+                  }}
                 >
-                  <div
-                    className="w-16 h-16 rounded-full flex items-center justify-center text-3xl mx-auto mb-4"
-                    style={{
-                      background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
-                    }}
+                  🏠
+                </div>
+                <div>
+                  <p
+                    className="font-sans text-base leading-relaxed mb-1"
+                    style={{ color: "rgba(255,255,255,0.75)" }}
                   >
-                    🎉
-                  </div>
-                  <h3 className="font-serif text-xl text-foreground mb-2">
-                    Your 7-day trial is booked!
-                  </h3>
-                  <p className="text-muted-foreground text-sm mb-6">
-                    We'll WhatsApp you within 2 hours to confirm your start
-                    date. No card needed — ever for the trial.
+                    Tap the button below to start your free trial on WhatsApp.
+                    We'll confirm your slot within 2 hours.
                   </p>
-                  <button
-                    type="button"
-                    onClick={handleClose}
-                    className="text-sm font-semibold text-cobalt underline"
-                    style={{ color: "#7C3AED" }}
-                  >
-                    Close
-                  </button>
-                </motion.div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <Label
-                      htmlFor="wl-name"
-                      className="text-sm font-semibold text-foreground mb-1.5 block"
-                    >
-                      Your Name
-                    </Label>
-                    <Input
-                      id="wl-name"
-                      type="text"
-                      placeholder="Priya Sharma"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      required
-                      data-ocid="waitlist.name_input"
-                      className="rounded-xl h-11"
-                    />
-                  </div>
-                  <div>
-                    <Label
-                      htmlFor="wl-phone"
-                      className="text-sm font-semibold text-foreground mb-1.5 block"
-                    >
-                      WhatsApp Number
-                    </Label>
-                    <Input
-                      id="wl-phone"
-                      type="tel"
-                      placeholder="9845XXXXXX"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      required
-                      data-ocid="waitlist.phone_input"
-                      className="rounded-xl h-11"
-                    />
-                  </div>
-                  <div>
-                    <Label
-                      htmlFor="wl-hometype"
-                      className="text-sm font-semibold text-foreground mb-1.5 block"
-                    >
-                      Home Type
-                    </Label>
-                    <Select
-                      value={homeType}
-                      onValueChange={setHomeType}
-                      required
-                    >
-                      <SelectTrigger
-                        id="wl-hometype"
-                        data-ocid="waitlist.home_type_select"
-                        className="rounded-xl h-11"
-                      >
-                        <SelectValue placeholder="Select your home type" />
-                      </SelectTrigger>
-                      <SelectContent onClick={(e) => e.stopPropagation()}>
-                        <SelectItem value="PG">PG / Hostel</SelectItem>
-                        <SelectItem value="OneBHK">1 BHK</SelectItem>
-                        <SelectItem value="TwoBHK">2 BHK</SelectItem>
-                        <SelectItem value="ThreeBHK">3 BHK</SelectItem>
-                        <SelectItem value="FourBHKPlus">4 BHK+</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="pt-2">
-                    <Button
-                      type="submit"
-                      disabled={loading || !name || !phone || !homeType}
-                      data-ocid="trial.claim_button"
-                      className="w-full h-12 rounded-full text-white font-semibold text-base btn-glow"
-                      style={{
-                        background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
-                        border: "none",
-                      }}
-                    >
-                      {loading
-                        ? "Setting up your trial…"
-                        : "Claim My Free Trial →"}
-                    </Button>
-                  </div>
-                  <p className="text-xs text-center text-muted-foreground">
-                    ✓ 7 days free · ✓ No card needed · ✓ Cancel anytime
-                  </p>
-                </form>
-              )}
+                </div>
+                <button
+                  type="button"
+                  onClick={handleTrialClick}
+                  data-ocid="trial.claim_button"
+                  className="w-full h-14 rounded-full text-white font-semibold text-base btn-glow flex items-center justify-center gap-2.5 transition-all duration-200 hover:opacity-90"
+                  style={{
+                    background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
+                    border: "none",
+                  }}
+                  aria-label="Start 7-day free trial on WhatsApp"
+                >
+                  <SiWhatsapp className="w-5 h-5" />
+                  Start My 7-Day Free Trial →
+                </button>
+                <p
+                  className="text-xs"
+                  style={{ color: "rgba(255,255,255,0.35)" }}
+                >
+                  ✓ 7 days free · ✓ No card needed · ✓ Opens WhatsApp
+                </p>
+              </div>
             </div>
           </motion.div>
         </motion.div>
@@ -1272,10 +1168,46 @@ function CheckIcon({ id }: { id: string }) {
   );
 }
 
+type BillingCycle = "monthly" | "quarterly" | "halfyearly" | "yearly";
+
+const BILLING_OPTIONS: {
+  key: BillingCycle;
+  label: string;
+  discount: number;
+  saveBadge: string;
+  note: string;
+}[] = [
+  { key: "monthly", label: "Monthly", discount: 0, saveBadge: "", note: "" },
+  {
+    key: "quarterly",
+    label: "Quarterly",
+    discount: 8,
+    saveBadge: "Save 8%",
+    note: "Billed every 3 months",
+  },
+  {
+    key: "halfyearly",
+    label: "Half Yearly",
+    discount: 15,
+    saveBadge: "Save 15%",
+    note: "Billed every 6 months",
+  },
+  {
+    key: "yearly",
+    label: "Yearly",
+    discount: 25,
+    saveBadge: "Save 25%",
+    note: "Billed annually",
+  },
+];
+
+function applyDiscount(base: number, discount: number): string {
+  const final = Math.round(base * (1 - discount / 100));
+  return `₹${final.toLocaleString("en-IN")}`;
+}
+
 function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
-  const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">(
-    "monthly",
-  );
+  const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly");
 
   const starterFeatures = [
     "Daily home sweeping (all floors)",
@@ -1332,58 +1264,60 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
         {/* Billing toggle */}
         <div className="flex justify-center mb-8">
           <div
-            className="inline-flex items-center p-1 rounded-full"
+            className="inline-flex items-center p-1 rounded-full gap-1"
             style={{
               background: "rgba(255,255,255,0.06)",
               border: "1px solid rgba(255,255,255,0.1)",
             }}
           >
-            <button
-              type="button"
-              onClick={() => setBillingCycle("monthly")}
-              data-ocid="pricing.monthly_toggle"
-              className="px-5 py-2 rounded-full text-sm font-semibold font-sans transition-all duration-200"
-              style={
-                billingCycle === "monthly"
-                  ? {
-                      background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
-                      color: "white",
-                    }
-                  : { color: "rgba(255,255,255,0.5)" }
-              }
-            >
-              Monthly
-            </button>
-            <button
-              type="button"
-              onClick={() => setBillingCycle("annual")}
-              data-ocid="pricing.annual_toggle"
-              className="px-5 py-2 rounded-full text-sm font-semibold font-sans transition-all duration-200 flex items-center gap-2"
-              style={
-                billingCycle === "annual"
-                  ? {
-                      background: "linear-gradient(135deg, #7C3AED, #F59E0B)",
-                      color: "white",
-                    }
-                  : { color: "rgba(255,255,255,0.5)" }
-              }
-            >
-              Annual
-              <span
-                className="text-xs font-bold px-1.5 py-0.5 rounded-full"
-                style={{
-                  background:
-                    billingCycle === "annual"
-                      ? "rgba(255,255,255,0.2)"
-                      : "rgba(245,158,11,0.2)",
-                  color: billingCycle === "annual" ? "white" : "#F59E0B",
-                }}
-              >
-                Save 22%
-              </span>
-            </button>
+            {BILLING_OPTIONS.map((opt) => {
+              const isActive = billingCycle === opt.key;
+              return (
+                <button
+                  key={opt.key}
+                  type="button"
+                  onClick={() => setBillingCycle(opt.key)}
+                  data-ocid={`pricing.${opt.key}_toggle`}
+                  className="px-4 py-2 rounded-full text-sm font-semibold font-sans transition-all duration-200 flex items-center gap-1.5"
+                  style={
+                    isActive
+                      ? {
+                          background:
+                            "linear-gradient(135deg, #7C3AED, #F59E0B)",
+                          color: "white",
+                        }
+                      : { color: "rgba(255,255,255,0.5)" }
+                  }
+                >
+                  {opt.label}
+                  {opt.saveBadge && (
+                    <span
+                      className="text-xs font-bold px-1.5 py-0.5 rounded-full hidden sm:inline"
+                      style={{
+                        background: isActive
+                          ? "rgba(255,255,255,0.2)"
+                          : "rgba(245,158,11,0.2)",
+                        color: isActive ? "white" : "#F59E0B",
+                      }}
+                    >
+                      {opt.saveBadge}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
+
+        {/* Active billing period note */}
+        {billingCycle !== "monthly" && (
+          <div className="flex justify-center mb-4">
+            <p className="font-sans text-sm" style={{ color: "#F59E0B" }}>
+              {BILLING_OPTIONS.find((o) => o.key === billingCycle)?.note} —{" "}
+              {BILLING_OPTIONS.find((o) => o.key === billingCycle)?.saveBadge}
+            </p>
+          </div>
+        )}
 
         {/* Free trial banner strip */}
         <div className="flex justify-center mb-10">
@@ -1480,18 +1414,26 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
                     letterSpacing: "-0.03em",
                   }}
                 >
-                  {billingCycle === "monthly" ? "₹3,999" : "₹3,119"}
+                  {applyDiscount(
+                    3999,
+                    BILLING_OPTIONS.find((o) => o.key === billingCycle)
+                      ?.discount ?? 0,
+                  )}
                 </span>
                 <span className="font-sans text-white/40 text-sm mb-1">
                   /mo
                 </span>
               </div>
-              {billingCycle === "annual" && (
+              {billingCycle !== "monthly" && (
                 <p
-                  className="font-sans text-white/50 text-xs mb-2"
+                  className="font-sans text-xs mb-2"
                   style={{ color: "#F59E0B" }}
                 >
-                  Billed annually — save 22%
+                  {BILLING_OPTIONS.find((o) => o.key === billingCycle)?.note} —{" "}
+                  {
+                    BILLING_OPTIONS.find((o) => o.key === billingCycle)
+                      ?.saveBadge
+                  }
                 </p>
               )}
               <p className="font-sans text-white/35 text-xs mb-7">
@@ -1587,18 +1529,26 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
                     backgroundClip: "text",
                   }}
                 >
-                  {billingCycle === "monthly" ? "₹4,999" : "₹3,899"}
+                  {applyDiscount(
+                    4999,
+                    BILLING_OPTIONS.find((o) => o.key === billingCycle)
+                      ?.discount ?? 0,
+                  )}
                 </span>
                 <span className="font-sans text-white/40 text-sm mb-1">
                   /mo
                 </span>
               </div>
-              {billingCycle === "annual" && (
+              {billingCycle !== "monthly" && (
                 <p
                   className="font-sans text-xs mb-2"
                   style={{ color: "#F59E0B" }}
                 >
-                  Billed annually — save 22%
+                  {BILLING_OPTIONS.find((o) => o.key === billingCycle)?.note} —{" "}
+                  {
+                    BILLING_OPTIONS.find((o) => o.key === billingCycle)
+                      ?.saveBadge
+                  }
                 </p>
               )}
               {billingCycle === "monthly" && (
@@ -1682,18 +1632,26 @@ function PricingSection({ onWaitlist }: { onWaitlist: () => void }) {
                     letterSpacing: "-0.03em",
                   }}
                 >
-                  {billingCycle === "monthly" ? "₹6,999" : "₹5,459"}
+                  {applyDiscount(
+                    6999,
+                    BILLING_OPTIONS.find((o) => o.key === billingCycle)
+                      ?.discount ?? 0,
+                  )}
                 </span>
                 <span className="font-sans text-white/40 text-sm mb-1">
                   /mo
                 </span>
               </div>
-              {billingCycle === "annual" && (
+              {billingCycle !== "monthly" && (
                 <p
-                  className="font-sans text-white/50 text-xs mb-2"
+                  className="font-sans text-xs mb-2"
                   style={{ color: "#F59E0B" }}
                 >
-                  Billed annually — save 22%
+                  {BILLING_OPTIONS.find((o) => o.key === billingCycle)?.note} —{" "}
+                  {
+                    BILLING_OPTIONS.find((o) => o.key === billingCycle)
+                      ?.saveBadge
+                  }
                 </p>
               )}
               <p className="font-sans text-white/35 text-xs mb-7">
@@ -2720,7 +2678,7 @@ function FAQSection() {
             Still have questions?
           </p>
           <a
-            href="https://wa.me/919535708093?text=Hi%20flynk!%20I%20have%20a%20question%20about%20your%20service"
+            href={`https://wa.me/${WA_NUMBER}?text=Hi%20Flynk%2C%20I%20want%20to%20know%20more%20about%20the%20services.`}
             target="_blank"
             rel="noopener noreferrer"
             data-ocid="faq.whatsapp_button"
@@ -2936,11 +2894,12 @@ function Footer({ onWaitlist, onNavigate }: FooterProps) {
             © {CURRENT_YEAR} FLYNK. All rights reserved. Built with ❤️ in
             Bengaluru
           </p>
-          <div className="flex gap-5">
+          <div className="flex gap-5 flex-wrap justify-center sm:justify-end">
             {[
               { label: "Privacy", action: () => onNavigate("privacy") },
               { label: "Terms", action: () => onNavigate("terms") },
               { label: "Sitemap", href: "/sitemap.xml" },
+              { label: "Admin", action: () => onNavigate("admin") },
             ].map((item) =>
               item.href ? (
                 <a
@@ -3011,19 +2970,29 @@ function FloatingWhatsApp() {
 
 // ─── Main App ─────────────────────────────────────────────────────────────────
 
-type Page = "home" | "blog" | "academy" | "privacy" | "terms";
+type Page = "home" | "blog" | "academy" | "privacy" | "terms" | "admin";
 
 export default function App() {
-  const [page, setPage] = useState<Page>("home");
+  const [page, setPage] = useState<Page>(() => {
+    // Check if URL hash indicates admin page
+    if (window.location.hash === "#admin") return "admin";
+    return "home";
+  });
   const [waitlistOpen, setWaitlistOpen] = useState(false);
 
   const handleNavigate = (p: string) => {
     setPage(p as Page);
+    if (p === "admin") {
+      window.location.hash = "admin";
+    } else {
+      window.location.hash = "";
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleBack = () => {
     setPage("home");
+    window.location.hash = "";
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -3031,6 +3000,7 @@ export default function App() {
   if (page === "academy") return <AcademyPage onBack={handleBack} />;
   if (page === "privacy") return <PrivacyPage onBack={handleBack} />;
   if (page === "terms") return <TermsPage onBack={handleBack} />;
+  if (page === "admin") return <AdminPage onBack={handleBack} />;
 
   return (
     <div className="min-h-screen bg-background font-sans">
